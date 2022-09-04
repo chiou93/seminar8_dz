@@ -48,6 +48,9 @@ class Program
       }
       temp2=0;
     }
+    Console.WriteLine(" ");
+    Console.Write("строка с наименьшей суммой элементов: {0}", result);
+    Console.WriteLine(" ");
   }
 }
 

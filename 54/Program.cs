@@ -8,66 +8,58 @@
 // 9 5 3 2
 // 8 4 4 2
 
-Console.Clear();
-Console.WriteLine($"Задача 54: Задайте двумерный массив. Напишите программу, которая упорядочит по убыванию элементы каждой строки двумерного массива.");
-Console.WriteLine($"\nВведите размер массива m x n и диапазон случайных значений:");
-int m = InputNumbers("Введите m: ");
-int n = InputNumbers("Введите n: ");
-int range = InputNumbers("Введите диапазон: от 1 до ");
 
-int[,] array = new int[m, n];
-CreateArray(array);
-WriteArray(array);
+Console.WriteLine("введите количество строк");
+int linesVol = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine("введите количество столбцов");
+int columnsVol = Convert.ToInt32(Console.ReadLine());
+int[,] numbers = new int[linesVol, columnsVol];
+FillArrayRandomNumbers(numbers);
+Console.WriteLine();
+Console.WriteLine("Массив до изменения");
+PrintArray(numbers);
 
-Console.WriteLine($"\nОтсортированный массив: ");
-OrderArrayLines(array);
-WriteArray(array);
-
-void OrderArrayLines(int[,] array)
+for (int i = 0; i < numbers.GetLength(0); i++)
 {
-  for (int i = 0; i < array.GetLength(0); i++)
-  {
-    for (int j = 0; j < array.GetLength(1); j++)
+    for (int j = 0; j < numbers.GetLength(1) - 1; j++)
     {
-      for (int k = 0; k < array.GetLength(1) - 1; k++)
-      {
-        if (array[i, k] < array[i, k + 1])
+        for (int z = 0; z < numbers.GetLength(1) - 1; z++)
         {
-          int temp = array[i, k + 1];
-          array[i, k + 1] = array[i, k];
-          array[i, k] = temp;
+            if (numbers[i, z] < numbers[i, z + 1]) 
+            {
+                int temp = 0;
+                temp = numbers[i, z];
+                numbers[i, z] = numbers[i, z + 1];
+                numbers[i, z + 1] = temp;
+            }
         }
-      }
     }
-  }
 }
+Console.WriteLine();
+Console.WriteLine("Массив по убыванию");
+PrintArray(numbers);
 
-int InputNumbers(string input)
+void FillArrayRandomNumbers(int[,] array)
 {
-  Console.Write(input);
-  int output = Convert.ToInt32(Console.ReadLine());
-  return output;
-}
-
-void CreateArray(int[,] array)
-{
-  for (int i = 0; i < array.GetLength(0); i++)
-  {
-    for (int j = 0; j < array.GetLength(1); j++)
+    for (int i = 0; i < array.GetLength(0); i++)
     {
-      array[i, j] = new Random().Next(range);
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            array[i, j] = new Random().Next(0, 10);
+        }
     }
-  }
 }
 
-void WriteArray(int[,] array)
+void PrintArray(int[,] array)
 {
-  for (int i = 0; i < array.GetLength(0); i++)
-  {
-    for (int j = 0; j < array.GetLength(1); j++)
+    for (int i = 0; i < array.GetLength(0); i++)
     {
-      Console.Write(array[i, j] + " ");
+        Console.Write("[ ");
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            Console.Write(array[i, j] + " ");
+        }
+        Console.Write("]");
+        Console.WriteLine("");
     }
-    Console.WriteLine();
-  }
 }

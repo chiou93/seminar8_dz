@@ -4,70 +4,100 @@
 // 5 9 2 3
 // 8 4 2 4
 // 5 2 6 7
-// Программа считает сумму элементов в каждой строке и выдаёт номер строки с наименьшей суммой элементов: 1 строка
 
-Console.Clear();
-Console.WriteLine($"Задача 56: Задайте прямоугольный двумерный массив. Напишите программу, которая будет находить строку с наименьшей суммой элементов.");
-Console.WriteLine($"\nВведите размер массива m x n и диапазон случайных значений:");
-int m = InputNumbers("Введите m: ");
-int n = InputNumbers("Введите n: ");
-int range = InputNumbers("Введите диапазон: от 1 до ");
 
-int[,] array = new int[m, n];
-CreateArray(array);
-WriteArray(array);
-
-int minSumLine = 0;
-int sumLine = SumLineElements(array, 0);
-for (int i = 1; i < array.GetLength(0); i++)
+class Program
 {
-  int tempSumLine = SumLineElements(array, i);
-  if (sumLine > tempSumLine)
+  static void Main()
   {
-    sumLine = tempSumLine;
-    minSumLine = i;
-  }
-}
-
-Console.WriteLine($"\n{minSumLine+1} - строкa с наименьшей суммой ({sumLine}) элементов ");
-
-
-int SumLineElements(int[,] array, int i)
-{
-  int sumLine = array[i,0];
-  for (int j = 1; j < array.GetLength(1); j++)
-  {
-    sumLine += array[i,j];
-  }
-  return sumLine;
-}
-
-int InputNumbers(string input)
-{
-  Console.Write(input);
-  int output = Convert.ToInt32(Console.ReadLine());
-  return output;
-}
-
-void CreateArray(int[,] array)
-{
-  for (int i = 0; i < array.GetLength(0); i++)
-  {
-    for (int j = 0; j < array.GetLength(1); j++)
+    Console.Clear();
+    Console.WriteLine("введите количество строк m: ");
+    int m= Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("введите количество элементов массива в строке n: ");
+    int n= Convert.ToInt32(Console.ReadLine());
+    int[,] array = new int[m, n];
+    Random myRandom = new Random();
+    Console.WriteLine(" ");
+    for (int i=0; i<m; i++)
     {
-      array[i, j] = new Random().Next(range);
+      for(int j=0; j<n; j++)
+      {
+        array[i, j] = myRandom.Next(0, 10+n);
+        Console.Write("{0}\t", array [i,j]);
+      }
+      Console.WriteLine(" ");
+    }
+    int result =1;
+    int temp1=0, temp2=0;
+    for(int i=0; i<m; i++)
+    {
+      for(int j=0; j<n; j++)
+      {
+        if(i==0)
+        {
+          temp2+= array[i,j];
+          temp1=temp2;
+        }
+        else{ temp2+= array[i,j];}
+      }
+      if(temp1>temp2)
+      {
+        result=i+1;
+        temp1=temp2;
+        temp2=0;
+      }
+      temp2=0;
     }
   }
 }
 
-void WriteArray (int[,] array)
-{
-  for (int i = 0; i < array.GetLength(0); i++)
-  {
-    for (int j = 0; j < array.GetLength(1); j++)
-    {
-      Console.Write(array[i,j] + " ");
-    }
-    Console.WriteLine();
-  }
-}
+
+
+// Console.WriteLine("введите размер массива");
+// int massVol = Convert.ToInt32(Console.ReadLine());
+// int[,] numbers = new int[massVol, massVol];
+// FillArrayRandomNumbers(numbers);
+// PrintArray(numbers);
+// int minsum = Int32.MaxValue;
+// int indexLine = 0;
+
+// for (int i = 0; i < numbers.GetLength(0); i++)
+// {
+//     int sum = 0;
+//     for (int j = 0; j < numbers.GetLength(1); j++)
+//     {
+//         sum = sum + numbers[i, j];        
+//     }
+//     if (sum < minsum)
+//     {
+//         minsum = sum;
+//         indexLine++;
+//     }
+// }
+
+// Console.WriteLine("строка с наименьшей суммой елементов под номером: " + (indexLine) + ", с суммой елементов равной: " + (minsum));
+
+// void FillArrayRandomNumbers(int[,] array)
+// {
+//     for (int i = 0; i < array.GetLength(0); i++)
+//     {
+//         for (int j = 0; j < array.GetLength(1); j++)
+//         {
+//             array[i, j] = new Random().Next(0, 10);
+//         }
+//     }
+// }
+
+// void PrintArray(int[,] array)
+// {
+//     for (int i = 0; i < array.GetLength(0); i++)
+//     {
+//         Console.Write("[ ");
+//         for (int j = 0; j < array.GetLength(1); j++)
+//         {
+//             Console.Write(array[i, j] + " ");
+//         }
+//         Console.Write("]");
+//         Console.WriteLine("");
+//     }
+// }
